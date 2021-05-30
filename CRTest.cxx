@@ -69,6 +69,10 @@ int main (int argc, char** argv){
 		visManager = new G4VisExecutive("error");
 		visManager->Initialize();
 	}
+	std::cout << *(G4Isotope::GetIsotopeTable()) << std::endl;
+	std::cout << *(G4Element::GetElementTable()) << std::endl;
+	std::cout << *(G4Material::GetMaterialTable()) << std::endl;
+
     // UIManager
     G4UImanager* uiManager = G4UImanager::GetUIpointer();
 	if( !args.Vis()){
