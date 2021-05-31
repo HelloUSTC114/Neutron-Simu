@@ -31,6 +31,7 @@
 #include "G4ios.hh"
 #include <cstdlib>
 
+#include "NeutronGenerator.hh"
 #include "PduGenerator.hh"
 #include "TFile.h"
 #include "TTree.h"
@@ -67,7 +68,10 @@ int main(int argc, char **argv)
 	tree->Branch("theta", &theta, "theta/D");
 	tree->Branch("phi", &phi, "phi/D");
 	tree->Branch("Ek", &Ek, "Ek/D");
-	PduGenerator pduGen;
+	// PduGenerator pduGen;
+	NeutronGenerator pduGen;
+	pduGen.ftg->Write();
+	pduGen.fNeuEne->Write();
 	for (int i = 0; i < 100000; i++)
 	{
 		if (i % 1000 == 0)

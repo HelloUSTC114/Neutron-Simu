@@ -18,6 +18,7 @@
 #include "G4ParticleTable.hh"
 #include "G4Event.hh"
 #include "Randomize.hh"
+#include "TGraph.h"
 
 #include "TF1.h"
 
@@ -29,7 +30,7 @@ public:
 
 public:
   virtual void GeneratePrimaries(G4Event *anEvent) override;
-
+  inline void GeneratePrimaryToy(double &theta, double &phi, double &Ek);
 
 private: // Override Base virtual method
   virtual void GeneratePosition() override;
@@ -37,14 +38,29 @@ private: // Override Base virtual method
   virtual void GenerateKineticEnergy() override;
 
 private:
-  G4double GetTheta(); // muon zenith angle
+  G4double GetTheta();          // muon zenith angle
   G4ThreeVector GetDirection(); // muon momentim direction
+
+  static double NeutronSpectrum(double *x, double *par);
 
 private:
   G4double fEmin;
   G4double fEmax;
   G4double fTheta;
+
+  static double ftgx[184];
+  static double ftgy[184];
+
+public:
+  static TGraph *ftg;
+  TF1 *fNeuEne;
 };
 
+inline void NeutronGenerator::GeneratePrimaryToy(double &theta, double &phi, double &Ek)
+{
+  theta = GetTheta();
+  phi = G4UniformRand() * TMath::Pi() * 2.;
+  Ek = fNeuEne->GetRandom() * CLHEP::MeV;
+}
 
 #endif /*CRTest_NeutronGenerator_h*/
